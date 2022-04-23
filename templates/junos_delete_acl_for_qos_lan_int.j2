@@ -1,0 +1,8 @@
+{% if lan_ik_int is defined %}
+ {% for int in lan_ik_int %}
+delete interfaces {{ int }} family inet filter input QOS-MARK-IN-IK
+ {% endfor %}
+{% endif %}
+{% for int in lan_int %}
+delete interfaces {{ int }} family inet filter input QOS-MARK-IN
+{% endfor %}

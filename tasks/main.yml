@@ -1,0 +1,51 @@
+---
+
+- name: RUN DELETE QoS on CISCO ROUTERS
+  block:
+    - name: RUN on CISCO DELETE SETTINGS INTERFACE WAN and POLICY for QoS
+      ios_config:
+        src: templates/cisco_delete_policy_map_int_out.j2
+      notify: SAVE CONFIG CISCO
+    - name: RUN on CISCO DELETE SETTINGS INTERFACE LAN and CLASS, POLICY for QoS
+      ios_config:
+        src: templates/cisco_delete_class_policy_map_int_in.j2
+      notify: SAVE CONFIG CISCO
+    - name: RUN on CISCO DELETE ACL for QoS
+      ios_config:
+        src: templates/cisco_delete_acl_for_qos.j2
+      notify: SAVE CONFIG CISCO
+  when: ansible_network_os == 'ios'
+
+
+- name: RUN DELETE QoS on JUNOS ROUTERS
+  block:
+    - name: RUN on JUNOS DELETE FILTER QoS INTERFACE LAN
+      cli_config:
+        config: "{{ lookup('template', 'templates/junos_delete_acl_for_qos_lan_int.j2') }}"
+    - name: RUN on JUNOS DELETE GLOBAL SETTINGS QoS
+      cli_config:
+        config: |
+          delete class-of-service
+          delete firewall family inet
+          delete firewall policer POLICER-VOICE
+          delete firewall policer POLICER-VIDEO-CONFERENCING
+  when: ansible_network_os == 'junos'
+
+
+- name: RUN DELETE QoS on HUAWEI ROUTERS
+  block:
+    - name: RUN on HUAWEI DELETE SETTINGS INTERFACE WAN and POLICY, BEHAVIOR, WRED for QoS
+      cli_command:
+        command: "{{ lookup('template', 'templates/huawei_delete_policy_behavior_out.j2') }}"
+    - name: RUN on HUAWEI DELETE SETTINGS INTERFACE LAN and POLICY, BEHAVIOR, CLASSIFIER for QoS
+      cli_command:
+        command: "{{ lookup('template', 'templates/huawei_delete_policy_behavior_class_in.j2') }}"
+    - name: RUN on HUAWEI DELETE ACL for QoS
+      cli_command:
+        command: "{{ lookup('template', 'templates/huawei_delete_acl_for_qos.j2') }}"
+    - name: RUN on HUAWEI SAVE CONFIG
+      cli_command:
+        command: save
+        prompt: "Are you sure to continue?"
+        answer: Y
+  when: ansible_network_os == 'ce'

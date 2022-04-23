@@ -1,0 +1,21 @@
+{% for int in gre_int %}
+interface {{ int }}
+ no qos pre-classify
+{% endfor %}
+interface {{ wan_int }}
+{% if qos_out == 100 %}
+ no bandwidth qos-reference 100000
+{% else %}
+ no max-reserved-bandwidth 100
+{% endif %}
+ no service-policy output QOS-SHAPE-OUT
+no policy-map QOS-SHAPE-OUT
+{% if qos_out == 5 %}
+no policy-map QOS-OUT-5M
+{% elif qos_out == 10 %}
+no policy-map QOS-OUT-10M
+{% elif qos_out == 20 %}
+no policy-map QOS-OUT-20M
+{% elif qos_out == 100 %}
+no policy-map QOS-OUT-100M
+{% endif %}

@@ -1,0 +1,7 @@
+---
+
+- name: SAVE CONFIG CISCO
+  ios_command:
+    commands:
+      - write
+  when: ansible_network_os == 'ios'

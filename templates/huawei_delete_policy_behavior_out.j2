@@ -1,0 +1,22 @@
+system-view
+{% for int in gre_int %}
+interface {{ int }}
+ undo qos pre-classify
+ quit
+{% endfor %}
+interface {{ wan_int }}
+ undo qos gts
+ undo qos car outbound
+ undo traffic-policy outbound
+ quit
+undo traffic policy QOS-SHAPE-OUT
+undo traffic behavior ROUTING
+undo traffic behavior VOICE
+undo traffic behavior VIDEO-CONFERENCING
+undo traffic behavior CALL-SIGNALING
+undo traffic behavior MISSION-CRITICAL-DATA
+undo traffic behavior NETWORK-MANAGEMENT
+undo traffic behavior BULK-DATA
+undo traffic behavior Be
+undo drop-profile WRED
+quit

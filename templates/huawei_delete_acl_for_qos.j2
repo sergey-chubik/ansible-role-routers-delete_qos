@@ -1,0 +1,16 @@
+system-view
+{% if qos_mark is defined %}
+undo acl name ACL-ROUTING
+undo acl name ACL-VoIP-RTP
+undo acl name ACL-VIDEO-CONFERENCING
+undo acl name ACL-CALL-SIGNALING
+undo acl name ACL-MISSION-CRITICAL-DATA-GOLD
+undo acl name ACL-MISSION-CRITICAL-DATA-SILVER
+undo acl name ACL-MISSION-CRITICAL-DATA-BRONZE
+undo acl name ACL-NETWORK-MANAGEMENT
+undo acl name ACL-BULK-DATA-GOLD
+undo acl name ACL-BULK-DATA-SILVER
+{% else %}
+
+{% endif %}
+quit

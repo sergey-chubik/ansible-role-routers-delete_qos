@@ -1,0 +1,15 @@
+{% if qos_mark is defined %}
+no ip access-list extended ACL-ROUTING
+no ip access-list extended ACL-VoIP-RTP
+no ip access-list extended ACL-VIDEO-CONFERENCING
+no ip access-list extended ACL-CALL-SIGNALING
+no ip access-list extended ACL-MISSION-CRITICAL-DATA-GOLD
+no ip access-list extended ACL-MISSION-CRITICAL-DATA-SILVER
+no ip access-list extended ACL-MISSION-CRITICAL-DATA-BRONZE
+no ip access-list extended ACL-NETWORK-MANAGEMENT
+no ip access-list extended ACL-BULK-DATA-GOLD
+no ip access-list extended ACL-BULK-DATA-SILVER
+no ip access-list extended ACL-DEFAULT
+{% else %}
+
+{% endif %}

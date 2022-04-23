@@ -1,0 +1,24 @@
+{% if qos_mark is defined %}
+{% for int in lan_int %}
+interface {{ int }}
+ no service-policy input QOS-MARK-IN
+{% endfor %}
+no policy-map QOS-MARK-IN
+no class-map match-any ROUTING
+no class-map match-any VOICE
+no class-map match-any VIDEO-CONFERENCING
+no class-map match-any CALL-SIGNALING
+no class-map match-any MISSION-CRITICAL-DATA
+no class-map match-any NETWORK-MANAGEMENT
+no class-map match-any BULK-DATA
+no class-map match-any DEFAULT
+{% else %}
+no class-map match-any ROUTING
+no class-map match-any VOICE
+no class-map match-any VIDEO-CONFERENCING
+no class-map match-any CALL-SIGNALING
+no class-map match-any MISSION-CRITICAL-DATA
+no class-map match-any NETWORK-MANAGEMENT
+no class-map match-any BULK-DATA
+no class-map match-any DEFAULT
+{% endif %}

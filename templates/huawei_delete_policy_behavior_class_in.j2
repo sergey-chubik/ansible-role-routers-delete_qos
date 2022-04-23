@@ -1,0 +1,33 @@
+system-view
+{% if qos_mark is defined %}
+ {% for int in lan_int %}
+interface {{ int }}
+ undo traffic-policy inbound
+ quit
+ {% endfor %}
+undo traffic policy QOS-MARK-IN
+undo traffic behavior ROUTING-MARK-IN
+undo traffic behavior VOICE-MARK-IN
+undo traffic behavior VIDEO-CONFERENCING-MARK-IN
+undo traffic behavior CALL-SIGNALING-MARK-IN
+undo traffic behavior MISSION-CRITICAL-DATA-MARK-IN
+undo traffic behavior NETWORK-MANAGEMENT-MARK-IN
+undo traffic behavior BULK-DATA-MARK-IN
+undo traffic behavior DEFAULT-MARK-IN
+undo traffic classifier ROUTING
+undo traffic classifier VOICE
+undo traffic classifier VIDEO-CONFERENCING
+undo traffic classifier CALL-SIGNALING
+undo traffic classifier MISSION-CRITICAL-DATA
+undo traffic classifier NETWORK-MANAGEMENT
+undo traffic classifier BULK-DATA
+{% else %}
+undo traffic classifier ROUTING
+undo traffic classifier VOICE
+undo traffic classifier VIDEO-CONFERENCING
+undo traffic classifier CALL-SIGNALING
+undo traffic classifier MISSION-CRITICAL-DATA
+undo traffic classifier NETWORK-MANAGEMENT
+undo traffic classifier BULK-DATA
+{% endif %}
+quit
